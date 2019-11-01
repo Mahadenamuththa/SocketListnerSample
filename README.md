@@ -26,11 +26,11 @@ You’ll need to have leatest Node version on your local development machine,Mak
 
 01. install socket.io,socket.io-client and express.
 
-  `npm install express --save`
+      `npm install express --save`
 
-  `npm install socket.io --save`
-  
-  `npm install socket.io-client --save`
+      `npm install socket.io --save`
+
+      `npm install socket.io-client --save`
   
   02. Create Folder in src 'Server'.
   
@@ -98,3 +98,40 @@ You’ll need to have leatest Node version on your local development machine,Mak
 
  ```
 
+05. Change App.js Like this
+
+ ``` javascript
+    import React from 'react';
+    import openSocket from "socket.io-client";
+
+    const socket = openSocket("http://localhost:6600");
+
+    class App extends React.Component {
+
+      constructor(props) {
+        super(props);
+        this.state = {
+          data: ""
+        }
+        let _this = this;
+        socket.on("data", function (d) {
+          _this.setState({
+            data: d
+          })
+        })
+      }
+
+      render() {
+        const { data } = this.state;
+        return (
+          <div>
+            <h1>{data}</h1>
+          </div>
+        )
+      }
+    }
+
+
+    export default App;
+
+ ```
